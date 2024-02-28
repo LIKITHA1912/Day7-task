@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        //filter function for Asia continent
+        var request1 = new XMLHttpRequest();
+        request1.open("GET","https://restcountries.com/v2/all");
+        request1.send();
+        request1.onload=function(){
+        var result=JSON.parse(request1.response);
+        result.filter((countries) => {
+           return countries.region ==="Asia";
+        })
+        console.log(result);
+        }
+
+        //filter function poppulation less than 200000
+        var request2 = new XMLHttpRequest();
+        request2.open("GET","https://restcountries.com/v2/all");
+        request2.send();
+        request2.onload=function(){
+            var result2=JSON.parse(request2.response);
+            const population_below = result2.filter((element)=>{
+            return element.population<200000;
+        })
+        console.log(population_below);
+        }
+
+        //using forEach method get name , capital, flag
+        var request3 = new XMLHttpRequest();
+        request3.open("GET","https://restcountries.com/v2/all");
+        request3.send();
+        request3.onload=function(){
+            var result3=JSON.parse(request3.response);
+            result3.forEach(element => {
+            console.log(element.name);
+            console.log(element.capital);
+            console.log(element.flag); 
+
+        });
+        }
+
+        //using reduce function total population of the countries
+        var request4 = new XMLHttpRequest();
+        request4.open("GET","https://restcountries.com/v2/all");
+        request4.send();
+        request4.onload=function(){
+            var result4=JSON.parse(request4.response);
+            var total = result4.reduce((acc,curr) =>{
+            return acc+curr.population;
+            } ,0);
+
+        console.log(total);
+
+        }
+
+        //country using US dollar sign
+        var request5 = new XMLHttpRequest();
+        request5.open("GET","https://restcountries.com/v2/all");
+        request5.send();
+        request5.onload=function(){
+            var result5=JSON.parse(request5.response);
+            var currency = result5.filter((element) => {
+            for(let key in element.currencies){
+                if(element.currencies[key].code === "USD"){
+                return element;
+                }
+            }
+            })
+        console.log(currency);
+        }
+
+
+
+        
+
+    </script>
+</body>
+</html>
